@@ -1,0 +1,36 @@
+<TrustFrameworkPolicy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/online/cpim/schemas/2013/06" PolicySchemaVersion="0.3.0.0" TenantId="iongroupprodb2c.onmicrosoft.com" PolicyId="B2C_1A_signup_signin_MarginDirect" PublicPolicyUri="http://iongroupprodb2c.onmicrosoft.com/B2C_1A_signup_signin_MarginDirect" TenantObjectId="9e8cdac6-2304-4e98-9122-d5cf3721e69a">
+	<BasePolicy>
+		<TenantId>iongroupprodb2c.onmicrosoft.com</TenantId>
+		<PolicyId>B2C_1A_TrustFrameworkExtensionsMarginDirect</PolicyId>
+	</BasePolicy>
+	<UserJourneys>
+		<UserJourney Id="CustomSignUpSignIn">
+			<OrchestrationSteps>
+				<OrchestrationStep Order="8" Type="SendClaims" CpimIssuerTechnicalProfileReferenceId="Saml2AssertionIssuer"/>
+			</OrchestrationSteps>
+		</UserJourney>
+	</UserJourneys>
+	<RelyingParty>
+		<DefaultUserJourney ReferenceId="CustomSignUpSignIn"/>
+		<UserJourneyBehaviors>
+		<!--To change the session expiry from default, enable and adjust below-->
+			<!--SessionExpiryType>Rolling</SessionExpiryType>
+			<SessionExpiryInSeconds>86340</SessionExpiryInSeconds-->
+			<ScriptExecution>Allow</ScriptExecution>
+		</UserJourneyBehaviors>
+		<TechnicalProfile Id="PolicyProfile">
+			<DisplayName>PolicyProfile</DisplayName>
+			<Protocol Name="SAML2"/>
+			<OutputClaims>
+				<OutputClaim ClaimTypeReferenceId="displayName"/>
+				<OutputClaim ClaimTypeReferenceId="givenName"/>
+				<OutputClaim ClaimTypeReferenceId="surname"/>
+				<OutputClaim ClaimTypeReferenceId="signInNames.emailAddress" PartnerClaimType="sub"/>
+				<OutputClaim ClaimTypeReferenceId="objectId"/>
+				<OutputClaim ClaimTypeReferenceId="groups"/>
+				<OutputClaim ClaimTypeReferenceId="tenantId" AlwaysUseDefaultValue="true" DefaultValue="{Policy:TenantObjectId}"/>
+			</OutputClaims>
+			<SubjectNamingInfo ClaimType="sub"/>
+		</TechnicalProfile>
+	</RelyingParty>
+</TrustFrameworkPolicy>
